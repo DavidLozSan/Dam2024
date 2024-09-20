@@ -1,0 +1,13 @@
+package edu.iesam.dam2024.features.superhero.data
+
+import edu.iesam.dam2024.features.superhero.domain.Superhero
+import edu.iesam.dam2024.features.superhero.domain.SuperheroRepository
+
+class SuperheroDataRepository(
+    private val mockRemoteDataSource: MockRemoteDataSource): SuperheroRepository {
+
+    override fun getSuperheroes(): List<Superhero> {
+        return mockRemoteDataSource.getSuperheroes()
+    }
+
+}
