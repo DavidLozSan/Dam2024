@@ -36,5 +36,5 @@ class MovieActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d("@dev", "@onDestroy")
     }
-
+//viewModel.itemSelected()
 }
