@@ -12,4 +12,8 @@ class SuperheroDataRepository(
         return mockRemoteDataSource.getSuperheroes()
     }
 
+    override fun getSuperhero(superheroId: String): Superhero? {
+        return mockRemoteDataSource.getSuperhero(superheroId)
+    }
+
 }
