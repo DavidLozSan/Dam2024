@@ -15,6 +15,8 @@ class MovieActivity : AppCompatActivity() {
         val viewModel = movieFactory.buildViewModel()
         val movies = viewModel.viewCreated()
         Log.d("@dev", movies.toString())
+        val movie = viewModel.itemSelected(movies.first().id)
+        Log.d("@dev", movie.toString())
     }
 
     override fun onResume() {
@@ -36,5 +38,4 @@ class MovieActivity : AppCompatActivity() {
         super.onDestroy()
         Log.d("@dev", "@onDestroy")
     }
-//viewModel.itemSelected()
 }

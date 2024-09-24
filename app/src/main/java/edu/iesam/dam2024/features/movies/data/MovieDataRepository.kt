@@ -12,4 +12,8 @@ class MovieDataRepository(
         return mockRemoteDataSource.getMovies()
     }
 
+    override fun getMovieById(movieId: String): Movie? {
+        return mockRemoteDataSource.getMovieById(movieId)
+    }
+
 }

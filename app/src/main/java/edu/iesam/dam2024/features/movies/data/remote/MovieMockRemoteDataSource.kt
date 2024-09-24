@@ -13,7 +13,7 @@ class MovieMockRemoteDataSource {
         )
     }
 
-    fun getMovie(movieId: String): Movie? {
+    fun getMovieById(movieId: String): Movie? {
         return getMovies().firstOrNull { movie -> movie.id == movieId }
     }
 }
