@@ -7,10 +7,13 @@ import edu.iesam.dam2024.features.movies.domain.GetMoviesUseCase
 
 class MovieFactory {
 
+    private val instance: MovieDataRepository = MovieDataRepository(MovieMockRemoteDataSource())
+
     fun buildViewModel(): MovieViewModel {
+        
         return MovieViewModel(
-            GetMoviesUseCase(MovieDataRepository(MovieMockRemoteDataSource())),
-            GetMovieByIdUseCase(MovieDataRepository(MovieMockRemoteDataSource()))
+            GetMoviesUseCase(instance),
+            GetMovieByIdUseCase(instance)
         )
     }
 }
