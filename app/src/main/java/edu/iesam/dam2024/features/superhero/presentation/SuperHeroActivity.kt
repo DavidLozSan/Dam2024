@@ -6,18 +6,25 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import edu.iesam.dam2024.R
+import edu.iesam.dam2024.features.superhero.data.local.SuperheroXmlLocalDataSource
 import edu.iesam.dam2024.features.superhero.domain.Superhero
 
 class SuperHeroActivity : AppCompatActivity() {
 
-    private val superheroFactory: SuperheroFactory = SuperheroFactory()
-    private val viewModel = superheroFactory.buildViewModel()
+    private lateinit var superheroFactory: SuperheroFactory
+    private lateinit var viewModel: SuperheroViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_superhero)
+
+        superheroFactory = SuperheroFactory(this)
+        viewModel = superheroFactory.buildViewModel()
+
         val superheroes = viewModel.viewCreated()
         binData(superheroes)
+
+        testXml()
     }
 
     private fun binData(superheroes: List<Superhero>) {
@@ -29,6 +36,15 @@ class SuperHeroActivity : AppCompatActivity() {
                 Log.d("@hero", "Superheroe seleccionado: ${it.principalData.name}")
             }
         }
+    }
 
+    private fun testXml() {
+        val xmlLocalDataSource = SuperheroXmlLocalDataSource(this)
+        val superhero = viewModel.itemSelected("1")
+        superhero?.let {
+            xmlLocalDataSource.save(it)
+        }
+        val superheroSaved = xmlLocalDataSource.find()
+        Log.d("@hero", superheroSaved.toString())
     }
 }
