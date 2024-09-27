@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintSet.Layout
 import edu.iesam.dam2024.R
 import edu.iesam.dam2024.features.movies.data.local.MovieXmlLocalDataSource
 import edu.iesam.dam2024.features.movies.domain.Movie
@@ -68,7 +67,9 @@ class MovieActivity : AppCompatActivity() {
         movie?.let {
             xmlDataSource.save(it)
         }
-        val movieSaved = xmlDataSource.findMovie()
+        val movieSaved = xmlDataSource.find()
         Log.d("@dev", movieSaved.toString())
+
+        xmlDataSource.delete()
     }
 }
