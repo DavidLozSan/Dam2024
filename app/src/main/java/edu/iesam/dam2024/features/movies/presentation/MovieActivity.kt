@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintSet.Layout
 import edu.iesam.dam2024.R
+import edu.iesam.dam2024.features.movies.data.local.MovieXmlLocalDataSource
 import edu.iesam.dam2024.features.movies.domain.Movie
 
 class MovieActivity : AppCompatActivity() {
@@ -20,6 +21,7 @@ class MovieActivity : AppCompatActivity() {
 
         val movies = viewModel.viewCreated()
         binData(movies)
+        testXml()
     }
 
     private fun binData(movies: List<Movie>) {
@@ -58,5 +60,15 @@ class MovieActivity : AppCompatActivity() {
                 Log.d("@dev", "Pelicula seleccionada: ${it.title}")
             }
         }
+    }
+
+    private fun testXml() {
+        val xmlDataSource = MovieXmlLocalDataSource(this)
+        val movie = viewModel.itemSelected("1")
+        movie?.let {
+            xmlDataSource.save(it)
+        }
+        val movieSaved = xmlDataSource.findMovie()
+        Log.d("@dev", movieSaved.toString())
     }
 }
