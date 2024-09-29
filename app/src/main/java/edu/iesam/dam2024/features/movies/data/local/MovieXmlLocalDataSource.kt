@@ -32,6 +32,15 @@ class MovieXmlLocalDataSource(private val context: Context) {
         }
     }
 
+    fun findById(movieId: String): Movie? {
+        sharedPref.apply {
+            val jsonMovie = getString(movieId, null)
+            return jsonMovie?.let {
+                gson.fromJson(it, Movie::class.java)
+            }
+        }
+    }
+
     fun delete() {
         sharedPref.edit().clear().apply()
     }

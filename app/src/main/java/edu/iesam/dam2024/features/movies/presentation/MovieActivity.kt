@@ -12,7 +12,7 @@ import edu.iesam.dam2024.features.movies.domain.Movie
 class MovieActivity : AppCompatActivity() {
 
     private lateinit var movieFactory: MovieFactory
-    private lateinit var  viewModel: MovieViewModel
+    private lateinit var viewModel: MovieViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +25,7 @@ class MovieActivity : AppCompatActivity() {
         binData(movies)
         testXml()
         testListXml()
+        testFindById()
     }
 
     private fun binData(movies: List<Movie>) {
@@ -75,7 +76,6 @@ class MovieActivity : AppCompatActivity() {
         Log.d("@dev", movieSaved.toString())
 
         xmlDataSource.delete()
-
     }
 
     private fun testListXml() {
@@ -85,6 +85,12 @@ class MovieActivity : AppCompatActivity() {
 
         val moviesFromXml = xmlDataSource.findAll()
         Log.d("@dev", moviesFromXml.toString())
+    }
+
+    private fun testFindById() {    //se ejecuta un xmlDataSource.delete() antes, puede dar null o la pelicula si esta en local
+        val xmlDataSource = MovieXmlLocalDataSource(this)
+        val movie = xmlDataSource.findById("3")
+        Log.d("@dev", movie.toString())
     }
 
 }
