@@ -28,7 +28,7 @@ class MovieDataRepository(
         } else {
             val movieFromRemote = mockRemoteDataSource.getMovieById(movieId)
             movieFromRemote?.let {
-                local.save(it)
+                local.saveAll(mockRemoteDataSource.getMovies())
             }
             return movieFromRemote
         }

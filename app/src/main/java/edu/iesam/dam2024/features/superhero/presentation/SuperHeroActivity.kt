@@ -26,6 +26,7 @@ class SuperHeroActivity : AppCompatActivity() {
 
         testXml()
         testListXml()
+        testFindById()
     }
 
     private fun binData(superheroes: List<Superhero>) {
@@ -41,20 +42,28 @@ class SuperHeroActivity : AppCompatActivity() {
 
     private fun testXml() {
         val xmlLocalDataSource = SuperheroXmlLocalDataSource(this)
+        xmlLocalDataSource.delete()
         val superhero = viewModel.itemSelected("1")
         superhero?.let {
             xmlLocalDataSource.save(it)
         }
         val superheroSaved = xmlLocalDataSource.find()
         Log.d("@hero", superheroSaved.toString())
+
+        xmlLocalDataSource.delete()
     }
 
     private fun testListXml() {
         val superheroes = viewModel.viewCreated()
-        val xmlDataSource = SuperheroXmlLocalDataSource(this)
-        xmlDataSource.saveAll(superheroes)
+        val xmlLocalDataSource = SuperheroXmlLocalDataSource(this)
+        xmlLocalDataSource.saveAll(superheroes)
 
-        val superheroesFromXml = xmlDataSource.findAll()
+        val superheroesFromXml = xmlLocalDataSource.findAll()
         Log.d("@hero", superheroesFromXml.toString())
+    }
+
+    private fun testFindById() {
+        val superhero = viewModel.itemSelected("2")
+        Log.d("@hero", superhero.toString())
     }
 }

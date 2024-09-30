@@ -99,6 +99,15 @@ class SuperheroXmlLocalDataSource(private val context: Context) {
         }
     }
 
+    fun findById(superheroId: String): Superhero? {
+        sharedPref.apply {
+            val jsonSuperhero = getString(superheroId, null)
+            return jsonSuperhero?.let {
+                gson.fromJson(it, Superhero::class.java)
+            }
+        }
+    }
+
     fun delete() {
         sharedPref.edit().clear().apply()
     }

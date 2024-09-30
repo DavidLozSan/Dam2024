@@ -68,6 +68,7 @@ class MovieActivity : AppCompatActivity() {
 
     private fun testXml() {
         val xmlDataSource = MovieXmlLocalDataSource(this)
+        xmlDataSource.delete()
         val movie = viewModel.itemSelected("1")
         movie?.let {
             xmlDataSource.save(it)
@@ -85,11 +86,11 @@ class MovieActivity : AppCompatActivity() {
 
         val moviesFromXml = xmlDataSource.findAll()
         Log.d("@dev", moviesFromXml.toString())
+        xmlDataSource.delete()
     }
 
-    private fun testFindById() {    //se ejecuta un xmlDataSource.delete() antes, puede dar null o la pelicula si esta en local
-        val xmlDataSource = MovieXmlLocalDataSource(this)
-        val movie = xmlDataSource.findById("3")
+    private fun testFindById() {
+        val movie = viewModel.itemSelected("3")
         Log.d("@dev", movie.toString())
     }
 
