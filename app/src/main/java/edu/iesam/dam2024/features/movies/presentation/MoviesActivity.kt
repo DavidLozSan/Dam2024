@@ -1,13 +1,10 @@
 package edu.iesam.dam2024.features.movies.presentation
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import edu.iesam.dam2024.R
-import edu.iesam.dam2024.features.movies.data.local.MovieXmlLocalDataSource
 import edu.iesam.dam2024.features.movies.domain.Movie
 
 class MoviesActivity : AppCompatActivity() {

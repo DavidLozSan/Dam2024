@@ -18,7 +18,7 @@ class SuperheroMockRemoteDataSource {
                 "1",
                 "Superman",
                 "Superman",
-                "https://example.com/superman.jpg",
+                "https://media.revistagq.com/photos/643ffd0043b7dde5906f2d7e/1:1/w_1079,h_1079,c_limit/904934.jpg",
                 PowerStats(85, 100, 95, 100, 100, 85),
                 Appearance(
                     "Male", "Kryptonian",
