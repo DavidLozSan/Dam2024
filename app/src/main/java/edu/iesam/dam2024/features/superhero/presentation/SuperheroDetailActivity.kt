@@ -7,6 +7,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import edu.iesam.dam2024.R
+import edu.iesam.dam2024.app.extensions.loadUrl
 import edu.iesam.dam2024.features.superhero.domain.Superhero
 
 class SuperheroDetailActivity : AppCompatActivity() {
@@ -34,10 +35,7 @@ class SuperheroDetailActivity : AppCompatActivity() {
 
     private fun binData(superhero: Superhero) {
         val imageView = findViewById<ImageView>(R.id.url)
-        Glide
-            .with(this)
-            .load(superhero.principalData.imageUrl)
-            .into(imageView)
+        imageView.loadUrl(superhero.principalData.imageUrl)
     }
 
     companion object {
