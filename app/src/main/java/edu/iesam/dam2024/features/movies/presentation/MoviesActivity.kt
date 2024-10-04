@@ -1,16 +1,19 @@
 package edu.iesam.dam2024.features.movies.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import edu.iesam.dam2024.R
+import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.features.movies.domain.Movie
 
 class MoviesActivity : AppCompatActivity() {
 
     private lateinit var movieFactory: MovieFactory
-    private lateinit var viewModel: MovieViewModel
+    private lateinit var viewModel: MoviesViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,8 +22,26 @@ class MoviesActivity : AppCompatActivity() {
         movieFactory = MovieFactory(this)
         viewModel = movieFactory.buildViewModel()
 
-        val movies = viewModel.viewCreated()
-        binData(movies)
+        setupObserver()
+
+        viewModel.viewCreated()
+    }
+
+    private fun setupObserver() {
+        val nameObserver = Observer<MoviesViewModel.UiState> { uiState ->
+            uiState.movies?.let {
+                binData(it)
+            }
+            uiState.errorApp?.let {
+                //pinto el erro
+            }
+            if (uiState.isLoading) {
+                Log.d("@dev","Cargando...")
+            } else {
+                //oculto el cargando...
+            }
+        }
+        viewModel.uiState.observe(this, nameObserver)
     }
 
     private fun binData(movies: List<Movie>) {
@@ -46,6 +67,15 @@ class MoviesActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.movie_title_4).text = movies[3].title
         findViewById<LinearLayout>(R.id.layout_4).setOnClickListener {
             navigateToMovieDetail(movies[3].id)
+        }
+    }
+
+    private fun showError(error: ErrorApp) {
+        when(error) {
+            ErrorApp.DataErrorApp -> TODO()
+            ErrorApp.InternetErrorApp -> TODO()
+            ErrorApp.ServerErrorApp -> TODO()
+            ErrorApp.UnknowErrorApp -> TODO()
         }
     }
 
