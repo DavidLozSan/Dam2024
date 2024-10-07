@@ -1,10 +1,14 @@
 package edu.iesam.dam2024.features.superhero.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import edu.iesam.dam2024.R
+import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.features.superhero.domain.Superhero
 
 class SuperHeroActivity : AppCompatActivity() {
@@ -19,9 +23,26 @@ class SuperHeroActivity : AppCompatActivity() {
         superheroFactory = SuperheroFactory(this)
         viewModel = superheroFactory.buildViewModel()
 
-        val superheroes = viewModel.viewCreated()
-        binData(superheroes)
+        viewModel.viewCreated()
 
+        setupObserver()
+    }
+
+    private fun setupObserver() {
+        val nameObserver = Observer<SuperheroViewModel.UiState> { uiState ->
+            uiState.superheroes?.let {
+                binData(it)
+            }
+            uiState.errorApp?.let {
+                showError(it)
+            }
+            if (uiState.isLoading) {
+                Log.d("@hero", "Loading...")
+            } else {
+                //hide loading
+            }
+        }
+        viewModel.uiState.observe(this, nameObserver)
     }
 
     private fun binData(superheroes: List<Superhero>) {
@@ -47,6 +68,15 @@ class SuperHeroActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.superhero_name_4).text = superheroes[3].principalData.name
         findViewById<LinearLayout>(R.id.layout_4).setOnClickListener {
             navigateToSuperheroDetail(superheroes[3].principalData.id)
+        }
+    }
+
+    private fun showError(error: ErrorApp) {
+        when (error) {
+            ErrorApp.DataErrorApp -> TODO()
+            ErrorApp.InternetErrorApp -> TODO()
+            ErrorApp.ServerErrorApp -> TODO()
+            ErrorApp.UnknowErrorApp -> TODO()
         }
     }
 

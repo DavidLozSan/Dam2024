@@ -3,10 +3,12 @@ package edu.iesam.dam2024.features.movies.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
+import androidx.lifecycle.Observer
 import edu.iesam.dam2024.R
+import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.app.extensions.loadUrl
 import edu.iesam.dam2024.features.movies.domain.Movie
 
@@ -23,19 +25,45 @@ class MovieDetailActivity : AppCompatActivity() {
         viewModel = movieFactory.buildMovieDetailViewModel()
 
         getMovieId()?.let { movieId ->
-            viewModel.viewCreated(movieId)?.let { movie ->
-                binData(movie)
-            }
+            viewModel.viewCreated(movieId)
         }
+
+        setupObserver()
     }
 
     private fun getMovieId(): String? {
         return intent.getStringExtra(KEY_MOVIE_ID)
     }
 
+    private fun setupObserver() {
+        val nameObserver = Observer<MovieDetailViewModel.UiState> { uiState ->
+            uiState.movie?.let {
+                binData(it)
+            }
+            uiState.errorApp?.let {
+                showError(it)
+            }
+            if (uiState.isLoading) {
+                Log.d("@dev", "Loading...")
+            } else {
+                //hide loading
+            }
+        }
+        viewModel.uiState.observe(this, nameObserver)
+    }
+
     private fun binData(movie: Movie) {
         val imageView = findViewById<ImageView>(R.id.poster)
         imageView.loadUrl(movie.poster)
+    }
+
+    private fun showError(error: ErrorApp) {
+        when (error) {
+            ErrorApp.DataErrorApp -> TODO()
+            ErrorApp.InternetErrorApp -> TODO()
+            ErrorApp.ServerErrorApp -> TODO()
+            ErrorApp.UnknowErrorApp -> TODO()
+        }
     }
 
     companion object {
