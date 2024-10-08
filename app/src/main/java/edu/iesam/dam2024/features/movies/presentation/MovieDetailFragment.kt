@@ -4,35 +4,45 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import edu.iesam.dam2024.R
 import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.app.extensions.loadUrl
+import edu.iesam.dam2024.databinding.FragmentMovieDetailBinding
 import edu.iesam.dam2024.features.movies.domain.Movie
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailFragment : Fragment() {
 
     private lateinit var movieFactory: MovieFactory
     private lateinit var viewModel: MovieDetailViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_movie_detail)
+    private var _binding: FragmentMovieDetailBinding? = null
+    private val binding get() = _binding!!
 
-        movieFactory = MovieFactory(this)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupObserver()
+        movieFactory = MovieFactory(requireContext())
         viewModel = movieFactory.buildMovieDetailViewModel()
-
         getMovieId()?.let { movieId ->
             viewModel.viewCreated(movieId)
         }
-
-        setupObserver()
     }
 
     private fun getMovieId(): String? {
-        return intent.getStringExtra(KEY_MOVIE_ID)
+        return requireActivity().intent.getStringExtra(KEY_MOVIE_ID)
     }
 
     private fun setupObserver() {
@@ -49,11 +59,11 @@ class MovieDetailActivity : AppCompatActivity() {
                 //hide loading
             }
         }
-        viewModel.uiState.observe(this, nameObserver)
+        viewModel.uiState.observe(viewLifecycleOwner, nameObserver)
     }
 
     private fun binData(movie: Movie) {
-        val imageView = findViewById<ImageView>(R.id.poster)
+        val imageView = binding.poster
         imageView.loadUrl(movie.poster)
     }
 
@@ -70,7 +80,7 @@ class MovieDetailActivity : AppCompatActivity() {
         val KEY_MOVIE_ID = "key_movie_id"
 
         fun getIntent(context: Context, movieId: String): Intent {
-            val intent = Intent(context, MovieDetailActivity::class.java)
+            val intent = Intent(context, MovieDetailFragment::class.java)
             intent.putExtra(KEY_MOVIE_ID, movieId)
             return intent
         }
