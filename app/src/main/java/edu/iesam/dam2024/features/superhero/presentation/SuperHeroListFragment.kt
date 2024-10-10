@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import edu.iesam.dam2024.databinding.FragmentSuperheroListBinding
+import edu.iesam.dam2024.features.superhero.domain.Superhero
 
 class SuperHeroListFragment : Fragment() {
 
@@ -38,10 +40,12 @@ class SuperHeroListFragment : Fragment() {
     private fun setupObserver() {
         val nameObserver = Observer<SuperheroListViewModel.UiState> { uiState ->
             uiState.superHeroes?.let {
-                // binData(it)
+                binData(it)
             }
             uiState.errorApp?.let {
                 // showError(it)
+            } ?: run {
+                //hide error
             }
             if (uiState.isLoading) {
                 Log.d("@dev", "Loading...")
@@ -50,5 +54,32 @@ class SuperHeroListFragment : Fragment() {
             }
         }
         viewModel.uiState.observe(viewLifecycleOwner, nameObserver)
+    }
+
+    private fun binData(superheroes: List<Superhero>) {
+        binding.apply {
+            superheroId1.text = superheroes[0].principalData.name
+            superheroId1.setOnClickListener {
+                navigateToDetails(superheroes[0].principalData.id)
+            }
+
+            superheroId2.text = superheroes[1].principalData.name
+            superheroId2.setOnClickListener {
+                navigateToDetails(superheroes[1].principalData.id)
+            }
+
+            superheroId3.text = superheroes[2].principalData.name
+            superheroId3.setOnClickListener {
+                navigateToDetails(superheroes[2].principalData.id)
+            }
+        }
+    }
+
+    private fun navigateToDetails(superheroId: String) {
+        findNavController().navigate(
+            SuperHeroListFragmentDirections.actionFromSuperheroToSuperheroDetail(
+                superheroId
+            )
+        )
     }
 }

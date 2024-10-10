@@ -3,16 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/movies_fragment">
+    app:startDestination="@id/superhero_fragment">
 
     <fragment
-        android:id="@+id/movies_fragment"
-        android:name="edu.iesam.dam2024.features.movies.presentation.MoviesFragment"
-        tools:layout="@layout/fragment_movies" />
+        android:id="@+id/superhero_fragment"
+        android:name="edu.iesam.dam2024.features.superhero.presentation.SuperHeroListFragment"
+        tools:layout="@layout/fragment_superhero_list">
+        <action
+            android:id="@+id/action_from_superhero_to_superhero_detail"
+            app:destination="@+id/superhero_detail_fragment" />
+    </fragment>
+
     <fragment
-        android:id="@+id/movie_detail_fragment"
-        android:name="edu.iesam.dam2024.features.movies.presentation.MovieDetailFragment"
-        tools:layout="@layout/fragment_movie_detail" />
-
-
+        android:id="@+id/superhero_detail_fragment"
+        android:name="edu.iesam.dam2024.features.superhero.presentation.SuperHeroDetailFragment"
+        tools:layout="@layout/fragment_superhero_detail">
+        <argument
+            android:name="superheroId"
+            app:argType="string"
+            app:nullable="false" />
+    </fragment>
 </navigation>

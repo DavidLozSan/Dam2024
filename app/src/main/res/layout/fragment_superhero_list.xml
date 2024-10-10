@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <Toolbar
+    <TextView
+        android:id="@+id/superhero_id_1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:title="@string/toolbar_title" />
+        android:layout_height="wrap_content" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:name="edu.iesam.dam2024.features.superhero.presentation.SuperHeroListFragment"
+    <TextView
+        android:id="@+id/superhero_id_2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/superhero_id_3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <!--
 
     <LinearLayout
@@ -96,4 +100,4 @@
     </LinearLayout>
     -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

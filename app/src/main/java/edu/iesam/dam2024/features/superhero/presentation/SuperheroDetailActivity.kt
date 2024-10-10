@@ -14,24 +14,24 @@ import edu.iesam.dam2024.features.superhero.domain.Superhero
 
 class SuperheroDetailActivity : AppCompatActivity() {
 
-    private lateinit var superheroFactory: SuperheroFactory
-    private lateinit var viewModel: SuperheroDetailViewModel
+    //private lateinit var superheroFactory: SuperheroFactory
+    //private lateinit var viewModel: SuperheroDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_superhero_detail)
 
-        superheroFactory = SuperheroFactory(this)
-        viewModel = superheroFactory.buildSuperheroDetailViewModel()
+        //superheroFactory = SuperheroFactory(this)
+        //viewModel = superheroFactory.buildSuperheroDetailViewModel()
 
-        getSuperheroId()?.let { superheroId ->
-            viewModel.viewCreated(superheroId)
-        }
+        //getSuperheroId()?.let { superheroId ->
+        //    viewModel.viewCreated(superheroId)
+        //}
 
-        setupObserver()
+        //setupObserver()
     }
-
-    private fun getSuperheroId(): String? {
+/*
+private fun getSuperheroId(): String? {
         return intent.getStringExtra(KEY_SUPERHERO_ID)
     }
 
@@ -75,4 +75,6 @@ class SuperheroDetailActivity : AppCompatActivity() {
             return intent
         }
     }
+
+ */
 }

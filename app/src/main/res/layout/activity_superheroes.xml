@@ -8,84 +8,17 @@
     android:orientation="vertical"
     tools:context=".features.superhero.presentation.SuperHeroesActivity">
 
-    <!-- Fila 1 -->
-    <LinearLayout
-        android:id="@+id/layout_1"
+    <Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal">
+        android:title="SuperHero" />
 
-        <TextView
-            android:id="@+id/superhero_id_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/superhero_name_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp" />
-    </LinearLayout>
-
-    <!-- Fila 2 -->
-    <LinearLayout
-        android:id="@+id/layout_2"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/container"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/superhero_id_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/superhero_name_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp" />
-    </LinearLayout>
-
-    <!-- Fila 3 -->
-    <LinearLayout
-        android:id="@+id/layout_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/superhero_id_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/superhero_name_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp" />
-    </LinearLayout>
-
-    <!-- Fila 4 -->
-    <LinearLayout
-        android:id="@+id/layout_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/superhero_id_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/superhero_name_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp" />
-    </LinearLayout>
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph" />
 
 </LinearLayout>
