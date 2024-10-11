@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/superhero_detail_fragment"
-        android:name="edu.iesam.dam2024.features.superhero.presentation.SuperHeroDetailFragment"
+        android:name="edu.iesam.dam2024.features.superhero.presentation.SuperheroDetailFragment"
         tools:layout="@layout/fragment_superhero_detail">
         <argument
             android:name="superheroId"

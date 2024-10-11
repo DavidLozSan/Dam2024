@@ -8,22 +8,20 @@ import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.features.movies.domain.GetMoviesUseCase
 import edu.iesam.dam2024.features.movies.domain.Movie
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MoviesViewModel(
+class MovieListViewModel(
     private val getMoviesUseCase: GetMoviesUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<UiState>()
     val uiState: LiveData<UiState> = _uiState
 
-    fun viewCreated() {
+    fun loadMovies() {
         _uiState.value = (UiState(isLoading = true))
 
         viewModelScope.launch(Dispatchers.IO) {
             val movies = getMoviesUseCase.invoke()
-            delay(5000)
             _uiState.postValue(UiState(movies = movies))
         }
     }

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.navArgs
 import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.app.extensions.loadUrl
 import edu.iesam.dam2024.databinding.FragmentMovieDetailBinding
@@ -22,6 +23,8 @@ class MovieDetailFragment : Fragment() {
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
+    private val movieArgs: MovieDetailFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,16 +36,10 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupObserver()
         movieFactory = MovieFactory(requireContext())
         viewModel = movieFactory.buildMovieDetailViewModel()
-        getMovieId()?.let { movieId ->
-            viewModel.viewCreated(movieId)
-        }
-    }
-
-    private fun getMovieId(): String? {
-        return requireActivity().intent.getStringExtra(KEY_MOVIE_ID)
+        setupObserver()
+        viewModel.viewCreated(movieArgs.movieId)
     }
 
     private fun setupObserver() {
@@ -52,19 +49,23 @@ class MovieDetailFragment : Fragment() {
             }
             uiState.errorApp?.let {
                 showError(it)
+            } ?: run {
+                //hide error
             }
             if (uiState.isLoading) {
                 Log.d("@dev", "Loading...")
             } else {
-                //hide loading
+                Log.d("@dev", "Loaded")
             }
         }
         viewModel.uiState.observe(viewLifecycleOwner, nameObserver)
     }
 
     private fun binData(movie: Movie) {
-        val imageView = binding.poster
-        imageView.loadUrl(movie.poster)
+        binding.apply {
+            movieImage.loadUrl(movie.poster)
+            movieName.text = movie.title
+        }
     }
 
     private fun showError(error: ErrorApp) {
@@ -73,16 +74,6 @@ class MovieDetailFragment : Fragment() {
             ErrorApp.InternetErrorApp -> TODO()
             ErrorApp.ServerErrorApp -> TODO()
             ErrorApp.UnknowErrorApp -> TODO()
-        }
-    }
-
-    companion object {
-        val KEY_MOVIE_ID = "key_movie_id"
-
-        fun getIntent(context: Context, movieId: String): Intent {
-            val intent = Intent(context, MovieDetailFragment::class.java)
-            intent.putExtra(KEY_MOVIE_ID, movieId)
-            return intent
         }
     }
 }

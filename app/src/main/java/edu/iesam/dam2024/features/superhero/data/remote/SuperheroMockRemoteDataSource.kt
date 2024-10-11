@@ -1,11 +1,11 @@
 package edu.iesam.dam2024.features.superhero.data.remote
 
 import edu.iesam.dam2024.features.superhero.domain.Appearance
-import edu.iesam.dam2024.features.superhero.domain.SuperheroConnection
 import edu.iesam.dam2024.features.superhero.domain.Height
 import edu.iesam.dam2024.features.superhero.domain.PowerStats
 import edu.iesam.dam2024.features.superhero.domain.Superhero
 import edu.iesam.dam2024.features.superhero.domain.SuperheroBiography
+import edu.iesam.dam2024.features.superhero.domain.SuperheroConnection
 import edu.iesam.dam2024.features.superhero.domain.SuperheroPrincipalData
 import edu.iesam.dam2024.features.superhero.domain.SuperheroWork
 import edu.iesam.dam2024.features.superhero.domain.Weight
@@ -18,7 +18,7 @@ class SuperheroMockRemoteDataSource {
                 "1",
                 "Superman",
                 "Superman",
-                "https://media.revistagq.com/photos/643ffd0043b7dde5906f2d7e/1:1/w_1079,h_1079,c_limit/904934.jpg",
+                "https://media.npr.org/assets/img/2011/11/30/frankface_custom-3fd12d46b7c62b91e8cd12c2f214ea92e51741a6.jpg?s=1100&c=50&f=jpeg",
                 PowerStats(85, 100, 95, 100, 100, 85),
                 Appearance(
                     "Male", "Kryptonian",
@@ -45,7 +45,7 @@ class SuperheroMockRemoteDataSource {
                 "2",
                 "Batman",
                 "batman",
-                "https://example.com/batman.jpg",
+                "https://static.dc.com/dc/files/default_images/Char_WhosWho_Batman_20190116_5c3fc4b40faf04.59002472.jpg",
                 PowerStats(100, 40, 35, 50, 55, 100),
                 Appearance(
                     "Male", "Human",
@@ -73,7 +73,7 @@ class SuperheroMockRemoteDataSource {
                 "3",
                 "Spider-Man",
                 "spiderman",
-                "https://example.com/spiderman.jpg",
+                "https://i.pinimg.com/564x/67/3a/f3/673af35c7e0d091101e54202aa20a7ef.jpg",
                 PowerStats(90, 55, 67, 60, 75, 85),
                 Appearance(
                     "Male", "Human",
@@ -101,7 +101,7 @@ class SuperheroMockRemoteDataSource {
                 "4",
                 "Wonder Woman",
                 "wonderwoman",
-                "https://example.com/wonderwoman.jpg",
+                "https://thanley.wordpress.com/wp-content/uploads/2015/01/ww38face3.png",
                 PowerStats(85, 100, 75, 90, 100, 95),
                 Appearance(
                     "Female", "Amazon",
@@ -134,6 +134,8 @@ class SuperheroMockRemoteDataSource {
     }
 
     fun getSuperhero(superheroId: String): Superhero? {
-        return getSuperheroes().firstOrNull { superhero -> superhero.principalData.id == superheroId }
+        return getSuperheroes().firstOrNull() { superhero ->
+            superhero.principalData.id == superheroId
+        }
     }
 }

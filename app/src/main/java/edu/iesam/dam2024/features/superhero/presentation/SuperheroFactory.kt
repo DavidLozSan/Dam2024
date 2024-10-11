@@ -6,7 +6,6 @@ import edu.iesam.dam2024.features.superhero.data.local.SuperheroXmlLocalDataSour
 import edu.iesam.dam2024.features.superhero.data.remote.SuperheroMockRemoteDataSource
 import edu.iesam.dam2024.features.superhero.domain.GetSuperheroUseCase
 import edu.iesam.dam2024.features.superhero.domain.GetSuperheroesUseCase
-import edu.iesam.dam2024.features.superhero.domain.Superhero
 
 
 class SuperheroFactory(private val context: Context) {
@@ -16,10 +15,6 @@ class SuperheroFactory(private val context: Context) {
     private val superheroDataRepository = SuperheroDataRepository(superheroLocal, superheroRemote)
     private val getSuperheroUseCase = GetSuperheroUseCase(superheroDataRepository)
     private val getSuperheroesUseCase = GetSuperheroesUseCase(superheroDataRepository)
-
-    fun buildViewModel(): SuperheroViewModel {
-        return SuperheroViewModel(getSuperheroesUseCase)
-    }
 
     fun buildSuperheroListViewModel(): SuperheroListViewModel {
         return SuperheroListViewModel(getSuperheroesUseCase)

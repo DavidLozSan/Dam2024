@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.databinding.FragmentSuperheroListBinding
 import edu.iesam.dam2024.features.superhero.domain.Superhero
 
@@ -43,14 +45,14 @@ class SuperHeroListFragment : Fragment() {
                 binData(it)
             }
             uiState.errorApp?.let {
-                // showError(it)
+                showError(it)
             } ?: run {
                 //hide error
             }
             if (uiState.isLoading) {
-                Log.d("@dev", "Loading...")
+                Log.d("@hero", "Loading...")
             } else {
-                //hide loading
+                Log.d("@hero", "Loaded.")
             }
         }
         viewModel.uiState.observe(viewLifecycleOwner, nameObserver)
@@ -58,20 +60,19 @@ class SuperHeroListFragment : Fragment() {
 
     private fun binData(superheroes: List<Superhero>) {
         binding.apply {
-            superheroId1.text = superheroes[0].principalData.name
-            superheroId1.setOnClickListener {
-                navigateToDetails(superheroes[0].principalData.id)
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            recyclerView.adapter = SuperheroAdapter(superheroes) { superheroId ->
+                navigateToDetails(superheroId)
             }
+        }
+    }
 
-            superheroId2.text = superheroes[1].principalData.name
-            superheroId2.setOnClickListener {
-                navigateToDetails(superheroes[1].principalData.id)
-            }
-
-            superheroId3.text = superheroes[2].principalData.name
-            superheroId3.setOnClickListener {
-                navigateToDetails(superheroes[2].principalData.id)
-            }
+    private fun showError(error: ErrorApp) {
+        when (error) {
+            ErrorApp.DataErrorApp -> TODO()
+            ErrorApp.InternetErrorApp -> TODO()
+            ErrorApp.ServerErrorApp -> TODO()
+            ErrorApp.UnknowErrorApp -> TODO()
         }
     }
 
@@ -81,5 +82,10 @@ class SuperHeroListFragment : Fragment() {
                 superheroId
             )
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

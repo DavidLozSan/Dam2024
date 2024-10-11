@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import android.content.Context
 import edu.iesam.dam2024.R
 import edu.iesam.dam2024.features.movies.domain.Movie
+import edu.iesam.dam2024.features.superhero.domain.Superhero
 
 class MovieXmlLocalDataSource(private val context: Context) {
     private val sharedPref = context.getSharedPreferences(
@@ -13,31 +14,14 @@ class MovieXmlLocalDataSource(private val context: Context) {
     private val gson = Gson()
 
     fun save(movie: Movie) {
-        sharedPref.edit().apply {
-            putString("id", movie.id)
-            putString("title", movie.title)
-            putString("poster", movie.poster)
-            apply()
-        }
-
-    }
-
-    fun find(): Movie {
-        sharedPref.apply {
-            return Movie(
-                getString("id", "")!!,
-                getString("title", "")!!,
-                getString("poster", "")!!
-            )
-        }
+        val editor = sharedPref.edit()
+        editor.putString(movie.id, gson.toJson(movie))
+        editor.apply()
     }
 
     fun findById(movieId: String): Movie? {
-        sharedPref.apply {
-            val jsonMovie = getString(movieId, null)
-            return jsonMovie?.let {
-                gson.fromJson(it, Movie::class.java)
-            }
+        return sharedPref.getString(movieId, null)?.let { movie ->
+            gson.fromJson(movie, Movie::class.java)
         }
     }
 
@@ -61,5 +45,9 @@ class MovieXmlLocalDataSource(private val context: Context) {
             movies.add(movie)
         }
         return movies
+    }
+
+    fun deleteById(id: String) {
+        sharedPref.edit().remove(id).apply()
     }
 }

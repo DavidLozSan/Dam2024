@@ -8,7 +8,6 @@ import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.features.superhero.domain.GetSuperheroUseCase
 import edu.iesam.dam2024.features.superhero.domain.Superhero
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SuperheroDetailViewModel(
@@ -18,12 +17,11 @@ class SuperheroDetailViewModel(
     private val _uiState = MutableLiveData<UiState>()
     val uiState: LiveData<UiState> = _uiState
 
-    fun viewCreated(superheroId: String) {
+    fun loadSuperhero(superheroId: String) {
         _uiState.value = UiState(isLoading = true)
 
         viewModelScope.launch(Dispatchers.IO) {
             val superhero = getSuperheroUseCase.invoke(superheroId)
-            delay(2000)
             _uiState.postValue(UiState(superhero = superhero))
         }
     }
