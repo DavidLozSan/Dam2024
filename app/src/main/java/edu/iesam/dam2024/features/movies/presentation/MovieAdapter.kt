@@ -16,8 +16,8 @@ class MovieAdapter(
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val textView: TextView = itemView.findViewById(R.id.superheroName)
-        val imageView: ImageView = itemView.findViewById(R.id.superheroImage)
+        val textView: TextView = itemView.findViewById(R.id.movieName)
+        val imageView: ImageView = itemView.findViewById(R.id.movieImage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {

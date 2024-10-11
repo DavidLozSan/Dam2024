@@ -19,7 +19,7 @@ class MovieMockRemoteDataSource {
             "Parasite",
             "https://i.etsystatic.com/18242346/r/il/87bc12/2184703308/il_fullxfull.2184703308_jpnu.jpg"
         ),
-        Movie(title = "title4", poster = "poster4", id = "4")
+        Movie(title = "Interstellar", poster = "https://static.posters.cz/image/750/posters/interstellar-one-sheet-i23157.jpg", id = "4")
     )
 
     fun getMovies(): List<Movie> {

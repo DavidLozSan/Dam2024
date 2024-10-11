@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.iesam.dam2024.app.domain.ErrorApp
 import edu.iesam.dam2024.databinding.FragmentMovieListBinding
@@ -58,8 +59,8 @@ class MovieListFragment : Fragment() {
 
     private fun binData(movies: List<Movie>) {
         binding.apply {
-            recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = MovieAdapter(movies) { movieId ->
+            movieRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+            movieRecyclerView.adapter = MovieAdapter(movies) { movieId ->
                 navigateToDetails(movieId)
             }
         }
@@ -75,7 +76,11 @@ class MovieListFragment : Fragment() {
     }
 
     private fun navigateToDetails(movieId: String) {
-        startActivity(MovieDetailFragment.getIntent(requireContext(), movieId))
+        findNavController().navigate(
+            MovieListFragmentDirections.actionFromMoviesToMovieDetail(
+                movieId
+            )
+        )
     }
 
     override fun onDestroyView() {

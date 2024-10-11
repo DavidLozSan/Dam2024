@@ -134,7 +134,7 @@ class SuperheroMockRemoteDataSource {
     }
 
     fun getSuperhero(superheroId: String): Superhero? {
-        return getSuperheroes().firstOrNull() { superhero ->
+        return getSuperheroes().firstOrNull { superhero ->
             superhero.principalData.id == superheroId
         }
     }

@@ -19,7 +19,6 @@ class MovieListViewModel(
 
     fun loadMovies() {
         _uiState.value = (UiState(isLoading = true))
-
         viewModelScope.launch(Dispatchers.IO) {
             val movies = getMoviesUseCase.invoke()
             _uiState.postValue(UiState(movies = movies))

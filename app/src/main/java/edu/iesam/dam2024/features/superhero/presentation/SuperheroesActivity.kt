@@ -6,7 +6,6 @@ import edu.iesam.dam2024.R
 
 class SuperheroActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_superheroes)

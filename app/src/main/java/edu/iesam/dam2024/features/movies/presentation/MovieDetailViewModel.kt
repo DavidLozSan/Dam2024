@@ -23,7 +23,6 @@ class MovieDetailViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             val movie = getMovieByIdUseCase.invoke(movieId)
-            delay(2000)
             _uiState.postValue(UiState(movie = movie))
         }
     }
